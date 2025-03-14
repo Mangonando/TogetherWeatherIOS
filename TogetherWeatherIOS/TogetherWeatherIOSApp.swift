@@ -1,5 +1,3 @@
-// test
-
 import SwiftUI
 
 @main

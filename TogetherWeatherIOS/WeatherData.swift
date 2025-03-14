@@ -1,4 +1,4 @@
-// Test This is the model. Here the api response structure will be managed
+// This is the model. Here the api response structure will be managed
 import Foundation
 
 struct WeatherData: Codable {

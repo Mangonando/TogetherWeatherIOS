@@ -1,4 +1,4 @@
-// Test Here the fetch and process of WeatherData will happen
+// Here the fetch and process of WeatherData will happen
 import Foundation
 
 @MainActor
