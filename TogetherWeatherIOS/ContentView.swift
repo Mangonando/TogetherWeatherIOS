@@ -92,10 +92,14 @@ struct ContentView: View {
                     .cornerRadius(8)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                     .onSubmit {
-                        viewModel.getWeatherData(city: cityName)
+                        Task {
+                            await viewModel.getWeatherData(city: cityName)
+                        }
                     }
                 Button(action: {
-                    viewModel.getWeatherData(city: cityName)
+                    Task {
+                        await viewModel.getWeatherData(city: cityName)
+                    }
                 }) {
                     Text("Search")
                         .foregroundColor(.white)
@@ -111,7 +115,9 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(getBackgroundColor(for: viewModel.weatherData?.main.roundedTemp ?? 0))
         .onAppear{
-            viewModel.getWeatherData(city: "Berlin")
+            Task {
+                await viewModel.getWeatherData(city: "Berlin")
+            }
         }
     }
 }
