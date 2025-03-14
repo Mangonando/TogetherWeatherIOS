@@ -16,7 +16,11 @@ struct ContentView: View {
             }
             HStack {
                 TextField("Enter city name", text: $cityName)
-                    .frame(width: 250)
+                    .padding()
+                    .frame(width: 250, height: 40)
+                    .background(.white)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
                     .onSubmit {
                         viewModel.getWeatherData(city: cityName)
                     }
@@ -24,6 +28,12 @@ struct ContentView: View {
                     viewModel.getWeatherData(city: cityName)
                 }) {
                     Text("Search")
+                        .foregroundColor(.white)
+                        .font(.title3)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 16)
+                        .background(Color.black)
+                        .cornerRadius(8)
                 }
             }
         }
