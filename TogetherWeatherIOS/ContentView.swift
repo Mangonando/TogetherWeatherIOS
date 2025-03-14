@@ -17,6 +17,9 @@ struct ContentView: View {
             HStack {
                 TextField("Enter city name", text: $cityName)
                     .frame(width: 250)
+                    .onSubmit {
+                        viewModel.getWeatherData(city: cityName)
+                    }
                 Button(action: {
                     viewModel.getWeatherData(city: cityName)
                 }) {
@@ -26,7 +29,13 @@ struct ContentView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
+        .background(
+            LinearGradient (
+                gradient: Gradient(colors: [Color.blue.opacity(0.2), Color.blue.opacity(0.5), Color.blue]),
+                startPoint: .bottom,
+                endPoint: .top
+            )
+        )
         .onAppear{
             viewModel.getWeatherData(city: "Berlin")
         }
