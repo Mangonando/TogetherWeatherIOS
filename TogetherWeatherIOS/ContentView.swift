@@ -8,9 +8,10 @@ struct ContentView: View {
         VStack(spacing: 10) {
             HStack {
                 TextField("Enter city name", text: $cityName)
+                    .frame(width: 250)
                 Button(action: {
                     viewModel.getWeatherData(city: cityName)
-                }) { 
+                }) {
                     Text("Search")
                 }
             }

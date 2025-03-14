@@ -1,10 +1,3 @@
-//
-//  TogetherWeatherIOSApp.swift
-//  TogetherWeatherIOS
-//
-//  Created by Juan Ramirez on 14.03.25.
-//
-
 import SwiftUI
 
 @main
