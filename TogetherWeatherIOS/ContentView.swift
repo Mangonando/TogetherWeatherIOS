@@ -5,55 +5,32 @@ struct ContentView: View {
     @State private var cityName: String = ""
     
     func getBackgroundColor(for temp: Int) -> LinearGradient {
-        if temp >= -10 && temp < -1 {
-            return LinearGradient (
-                gradient: Gradient(colors: [Color.blue.opacity(0.2), Color.blue.opacity(0.5), Color.blue]),
-                startPoint: .bottom,
-                endPoint: .top
-            )
-        } else if temp >= 0 && temp <= 9 {
-            return LinearGradient (
-                gradient: Gradient(colors: [Color.cyan.opacity(0.2), Color.cyan.opacity(0.5), Color.cyan]),
-                startPoint: .bottom,
-                endPoint: .top
-            )
-        } else if temp >= 10 && temp <= 19 {
-            return LinearGradient (
-                gradient: Gradient(colors: [Color.teal.opacity(0.2), Color.teal.opacity(0.5), Color.teal]),
-                startPoint: .bottom,
-                endPoint: .top
-            )
-        } else if temp >= 20 && temp <= 29 {
-            return LinearGradient (
-                gradient: Gradient(colors: [Color.green.opacity(0.2), Color.green.opacity(0.5), Color.green]),
-                startPoint: .bottom,
-                endPoint: .top
-            )
-        } else if temp >= 30 && temp <= 34 {
-            return LinearGradient (
-                gradient: Gradient(colors: [Color.yellow.opacity(0.2), Color.yellow.opacity(0.5), Color.yellow]),
-                startPoint: .bottom,
-                endPoint: .top
-            )
-        } else if temp >= 35 && temp <= 39 {
-            return LinearGradient (
-                gradient: Gradient(colors: [Color.orange.opacity(0.2), Color.orange.opacity(0.5), Color.orange]),
-                startPoint: .bottom,
-                endPoint: .top
-            )
-        } else if temp > 40 {
-            return LinearGradient (
-                gradient: Gradient(colors: [Color.red.opacity(0.2), Color.red.opacity(0.5), Color.red]),
-                startPoint: .bottom,
-                endPoint: .top
-            )
-        } else {
-            return LinearGradient (
-                gradient: Gradient(colors: [Color.purple.opacity(0.2), Color.purple.opacity(0.5), Color.purple]),
-                startPoint: .bottom,
-                endPoint: .top
-            )
+        let color: Color
+
+        switch temp {
+        case -10..<0:
+            color = .blue
+        case 0...9:
+            color = .cyan
+        case 10...19:
+            color = .teal
+        case 20...29:
+            color = .green
+        case 30...34:
+            color = .yellow
+        case 35...39:
+            color = .orange
+        case 40...:
+            color = .red
+        default:
+            color = .purple
         }
+
+        return LinearGradient (
+            gradient: Gradient(colors: [color.opacity(0.2), color.opacity(0.5), color]),
+            startPoint: .bottom,
+            endPoint: .top
+        )
     }
     
     var body: some View {
