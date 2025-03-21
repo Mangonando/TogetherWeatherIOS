@@ -73,7 +73,7 @@ struct ContentView: View {
             Spacer().frame(height: 72)
             
             HStack {
-                TextField("Enter city name", text: $cityName)
+                TextField("Search for a city", text: $cityName)
                     .padding()
                     .frame(width: 250, height: 40)
                     .background(.white)
