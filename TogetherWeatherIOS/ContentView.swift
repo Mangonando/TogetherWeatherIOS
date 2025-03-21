@@ -11,7 +11,7 @@ struct ContentView: View {
 
     struct ShadowModifier: ViewModifier {
         func body(content: Content) -> some View {
-            content.shadow(color: Color.white.opacity(0.7), radius: 0, x: 0.5, y: 1)
+            content.shadow(color: Color.white.opacity(0.7), radius: 1, x: 0.5, y: 1)
         }
     }
     
