@@ -9,27 +9,29 @@ class WeatherViewModel: ObservableObject {
     private let baseUrl = "https://api.openweathermap.org/data/2.5/weather"
     
     func getWeatherData(city: String) async {
-        var components = URLComponents(string: baseUrl)
-        components?.queryItems = [
-            URLQueryItem(name: "q", value: city),
-            URLQueryItem(name: "appid", value: apiKey),
-            URLQueryItem(name: "units", value: "metric")]
-
-        guard let url = components?.url else {
-            print("Invalid URL")
+        guard let url = URL(string: "\(baseUrl)?q=\(city)&appid=\(apiKey)&units=metric") else {
+            print("Invalid city URL")
             return
         }
+                await fetchWeather(from: url)
+    }
 
+    func getWeatherData(lat: Double, lon: Double) async {
+        guard let url = URL(string: "\(baseUrl)?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=metric") else {
+            print("Invalid lat and lon URL")
+            return
+        }
+                await fetchWeather(from: url)
+    }
+
+    private func fetchWeather(from url: URL) async {
         do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                print("Invalid response")
-                return
-            }
+            let (data, _) = try await URLSession.shared.data(from: url)
             let decodedData = try JSONDecoder().decode(WeatherData.self, from: data)
-            self.weatherData = decodedData
-            print("JSON successfully decoded")
+
+            DispatchQueue.main.async {
+                self.weatherData = decodedData
+            }
         }
         catch {print("Error decoding JSON")}
     }

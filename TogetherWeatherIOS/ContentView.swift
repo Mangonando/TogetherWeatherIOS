@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel = WeatherViewModel()
+    @StateObject private var locationManager = LocationManager()
     @State private var cityName: String = ""
     
     func getBackgroundColor(for temp: Int) -> LinearGradient {
@@ -31,6 +32,16 @@ struct ContentView: View {
             startPoint: .bottom,
             endPoint: .top
         )
+    }
+
+    func handleLocationUpdate() {
+        Task {
+            if let lat = locationManager.userLat, let lon = locationManager.userLon {
+                await viewModel.getWeatherData(lat: lat, lon: lon)
+            } else {
+                await viewModel.getWeatherData(city: "Envigado")
+            }
+        }
     }
     
     var body: some View {
@@ -92,9 +103,10 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(getBackgroundColor(for: viewModel.weatherData?.main.roundedTemp ?? 0))
         .onAppear{
-            Task {
-                await viewModel.getWeatherData(city: "Berlin")
-            }
+            locationManager.requestLocation()
+        }
+        .onChange(of: locationManager.userLat) {_ in
+            handleLocationUpdate()
         }
     }
 }
