@@ -28,7 +28,7 @@ struct ContentView: View {
         }
 
         return LinearGradient (
-            gradient: Gradient(colors: [color.opacity(0.2), color.opacity(0.5), color]),
+            gradient: Gradient(colors: [color.opacity(0.8), color]),
             startPoint: .bottom,
             endPoint: .top
         )
@@ -79,7 +79,7 @@ struct ContentView: View {
             }
             .padding()
             .frame(width: 350, height: 40)
-            .background(.white)
+            .background(Color.white.opacity(0.3))
             .cornerRadius(8)
             .onSubmit {
                 Task {
@@ -98,6 +98,7 @@ struct ContentView: View {
                     Text("My Location")
                 }
                 .font(.footnote)
+                .foregroundColor(Color.black.opacity(0.5))
                 .padding(.top, 8)
             }
         }
