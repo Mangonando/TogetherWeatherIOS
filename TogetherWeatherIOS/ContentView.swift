@@ -4,6 +4,16 @@ struct ContentView: View {
     @StateObject private var viewModel = WeatherViewModel()
     @StateObject private var locationManager = LocationManager()
     @State private var cityName: String = ""
+
+    var weatherShadow: some ViewModifier {
+        ShadowModifier()
+    }
+
+    struct ShadowModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            content.shadow(color: Color.white.opacity(0.7), radius: 0, x: 0.5, y: 1)
+        }
+    }
     
     func getBackgroundColor(for temp: Int) -> LinearGradient {
         let color: Color
@@ -28,7 +38,7 @@ struct ContentView: View {
         }
 
         return LinearGradient (
-            gradient: Gradient(colors: [color.opacity(0.8), color]),
+            gradient: Gradient(colors: [color.opacity(0.9), color]),
             startPoint: .bottom,
             endPoint: .top
         )
@@ -43,15 +53,17 @@ struct ContentView: View {
             }
         }
     }
+
+
     
     var body: some View {
         VStack(spacing: 10) {
             if let weather = viewModel.weatherData {
-                Text("\(weather.name), \(weather.sys.country)").font(.largeTitle).bold()
+                Text("\(weather.name), \(weather.sys.country)").font(.largeTitle).bold().modifier(weatherShadow)
+                Text("\(weather.main.roundedTemp)°").font(.system(size: 120)).modifier(weatherShadow)
                 Text("\(weather.weather[0].main)").font(.title2)
-                Text("\(weather.main.roundedTemp) °c").font(.system(size: 72))
                 
-                Spacer().frame(height: 12)
+                Spacer().frame(height: 8)
                 
                 HStack(spacing: 50){
                     VStack(){
@@ -68,6 +80,9 @@ struct ContentView: View {
                     }
 
                 }
+                .padding()
+                .background(Color.white.opacity(0.1))
+                .cornerRadius(18)
             }
             
             Spacer().frame(height: 72)
@@ -80,7 +95,7 @@ struct ContentView: View {
             .padding()
             .frame(width: 350, height: 40)
             .background(Color.white.opacity(0.3))
-            .cornerRadius(8)
+            .cornerRadius(18)
             .onSubmit {
                 Task {
                     await viewModel.getWeatherData(city: cityName)
