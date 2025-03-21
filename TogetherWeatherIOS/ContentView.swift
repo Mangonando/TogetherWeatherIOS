@@ -82,6 +82,7 @@ struct ContentView: View {
                     .onSubmit {
                         Task {
                             await viewModel.getWeatherData(city: cityName)
+                            cityName = ""
                         }
                     }
                 Button(action: {
