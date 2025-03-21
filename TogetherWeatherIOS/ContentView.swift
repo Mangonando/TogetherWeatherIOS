@@ -98,6 +98,19 @@ struct ContentView: View {
                         .cornerRadius(8)
                 }
             }
+            Button(action: {
+                locationManager.requestLocation()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    handleLocationUpdate()
+                }
+            }) {
+                HStack {
+                    Image(systemName: "location.fill")
+                    Text("My Location")
+                }
+                .font(.footnote)
+                .padding(.top, 8)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
