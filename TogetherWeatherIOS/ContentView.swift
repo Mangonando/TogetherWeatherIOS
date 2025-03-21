@@ -73,30 +73,18 @@ struct ContentView: View {
             Spacer().frame(height: 72)
             
             HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.secondary)
                 TextField("Search for a city", text: $cityName)
-                    .padding()
-                    .frame(width: 250, height: 40)
-                    .background(.white)
-                    .cornerRadius(8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
-                    .onSubmit {
-                        Task {
-                            await viewModel.getWeatherData(city: cityName)
-                            cityName = ""
-                        }
-                    }
-                Button(action: {
-                    Task {
-                        await viewModel.getWeatherData(city: cityName)
-                    }
-                }) {
-                    Text("Search")
-                        .foregroundColor(.white)
-                        .font(.title3)
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 16)
-                        .background(Color.black)
-                        .cornerRadius(8)
+            }
+            .padding()
+            .frame(width: 350, height: 40)
+            .background(.white)
+            .cornerRadius(8)
+            .onSubmit {
+                Task {
+                    await viewModel.getWeatherData(city: cityName)
+                    cityName = ""
                 }
             }
             Button(action: {
